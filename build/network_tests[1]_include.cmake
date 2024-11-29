@@ -1,0 +1,5 @@
+if(EXISTS "/Users/edselcisneros/Documents/Integradora2/build/network_tests[1]_tests.cmake")
+  include("/Users/edselcisneros/Documents/Integradora2/build/network_tests[1]_tests.cmake")
+else()
+  add_test(network_tests_NOT_BUILT network_tests_NOT_BUILT)
+endif()

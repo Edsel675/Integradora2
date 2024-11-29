@@ -11,22 +11,25 @@ enable_testing()
 # Agregar Google Test
 include(FetchContent)
 FetchContent_Declare(
-  googletest
-  URL https://github.com/google/googletest/archive/refs/tags/v1.13.0.zip
+    googletest
+    URL https://github.com/google/googletest/archive/refs/tags/v1.13.0.zip
 )
 FetchContent_MakeAvailable(googletest)
 
-# Crear la biblioteca principal
+# Agregar directorios de inclusión
+include_directories(${PROJECT_SOURCE_DIR}/include)
+
+# Crear biblioteca principal
 add_library(network_lib
     src/NetworkOptimizer.cpp
 )
 target_include_directories(network_lib PUBLIC include)
 
-# Crear el ejecutable principal
+# Crear ejecutable principal
 add_executable(network_optimizer src/main.cpp)
-target_link_libraries(network_optimizer PRIVATE network_lib)
+target_link_libraries(network_optimizer network_lib)
 
-# Crear y configurar los tests
+# Crear ejecutable de pruebas
 add_executable(network_tests test/test_network.cpp)
 target_link_libraries(network_tests
     PRIVATE
@@ -34,6 +37,6 @@ target_link_libraries(network_tests
     gtest_main
 )
 
-# Agregar los tests al CTest
+# Agregar los tests
 include(GoogleTest)
 gtest_discover_tests(network_tests)
